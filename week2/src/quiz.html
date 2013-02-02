@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Week2 Quiz</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Week2 Quiz</h1>
+
+<p>Setup some common variables and the working directory</p>
+
+<pre><code>setwd(&quot;./week2&quot;)
+url &lt;- &quot;https://spark-public.s3.amazonaws.com/dataanalysis/&quot;
+</code></pre>
+
+<h2>Question 2</h2>
+
+<pre><code>library(XML)
+dataConnection = url(&quot;http://simplystatistics.tumblr.com/&quot;)
+data = readLines(dataConnection, n = 150)
+close(dataConnection)
+lapply(data, nchar)[c(2,45,122)]
+</code></pre>
+
+<p><em>Answer: 918,5,24</em></p>
+
+<h2>Question 3</h2>
+
+<pre><code>download.file(paste(url,&quot;PUMSDataDict06.pdf&quot;, sep=&quot;&quot;),destfile=&quot;./data/housing.pdf&quot;,method=&quot;auto&quot;)
+download.file(paste(url,&quot;ss06hid.csv&quot;,sep=&quot;&quot;),destfile=&quot;./data/housing.csv&quot;,method=&quot;auto&quot;)
+
+housingData &lt;- read.csv(&quot;./data/housing.csv&quot;)
+head(housingData)
+names(housingData)
+?sum
+sum(housingData$VAL == 24, na.rm = TRUE)
+</code></pre>
+
+<p><em>Answer: 53</em></p>
+
+<h2>Question 5</h2>
+
+<pre><code>f &lt;- function(bds,rms) {
+  sum(housingData$BDS == bds &amp; housingData$RMS == rms, na.rm = TRUE)
+}
+f(3,4);f(2,5);f(2,7)
+</code></pre>
+
+<p><em>Answer: 148,386,49</em></p>
+
+<h2>Question 6</h2>
+
+<pre><code>agricultureLogical &lt;- housingData$ACR == 3 &amp; housingData$AGS == 6
+which(agricultureLogical)[1:3]
+</code></pre>
+
+<p><em>Answer: 125,238,262</em></p>
+
+<h2>Question 7</h2>
+
+<pre><code>indexes &lt;- which(agricultureLogical)
+subFrame &lt;- housingData[indexes,]
+sum(is.na(subaFrame$MRGX))
+</code></pre>
+
+<p><em>Answer: 8</em></p>
+
+<h2>Question 8</h2>
+
+<pre><code>ncol(housingData)
+names(housingData)
+strsplit(names(housingData),&quot;wgtp&quot;)[123]
+</code></pre>
+
+<p><em>Answer: &ldquo;&rdquo; &ldquo;15&rdquo;</em></p>
+
+<h2>Question 9</h2>
+
+<pre><code>quantile(housingData$YBL,na.rm=TRUE)
+</code></pre>
+
+<p><em>Answer: -1,25, Something Wrong</em></p>
+
+<h2>Question 10</h2>
+
+<pre><code>download.file(paste(url,&quot;ss06pid.csv&quot;, sep=&quot;&quot;),destfile=&quot;./data/population.csv&quot;,method=&quot;auto&quot;)
+populationData &lt;- read.csv(&quot;./data/population.csv&quot;)
+head(populationData)
+mergedData &lt;- merge(housingData,populationData,by.x=&quot;SERIALNO&quot;,by.y=&quot;SERIALNO&quot;,all=TRUE)
+dim(mergedData) 
+mergedData &lt;- merge(housingData,populationData)
+</code></pre>
+
+<p><em>Answer: 1451, 426</em></p>
+
+</body>
+
+</html>
+
